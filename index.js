@@ -218,7 +218,7 @@ let movies = [
     }
 ];
 
-//Setup the logger to terminal
+//Setup logger to terminal
 app.use(morgan('common'));
 
 //Setup express.static for documentation
