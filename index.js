@@ -359,17 +359,17 @@ app.delete('/users/:id/:movieTitle', (req, res) => {
 
 //Deregister of a user with id
 
-app.delete('/users/:id', (req, res) => {
-    const {id} = req.params;
+app.delete('/users/:email', (req, res) => {
+    const {email} = req.params;
     
-    let user = users.find(user => user.id == id);
+    let user = users.find(user => user.email === email);
 
     if(!user){
-        const message = "There is no user with that id";
+        const message = "There is no user with that email";
         res.status(400).send(message);
     }else{
-        users = users.filter( user => user.id != id );
-        res.status(201).send(` User with id: ${id} has been removed`);
+        users = users.filter( user => user.email !== email );
+        res.status(201).send(` User with id: ${email} has been removed`);
     }
 
 });
