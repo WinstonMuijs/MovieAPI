@@ -2,11 +2,249 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <title>ArtHouse docs</title>
   </head>
   <body>
-    <h1>The ArtHouse MovieAPI</h1>
-    <h3>A web application that will provide users with access to information about different movies, directors, and genres within ArtHouse flicks . Users will be able to sign up, update their personal information, and create a list of their favorite ArtHouse movies.</h3>
-    <p>The REST API is for an application called "ArtFlick" that interacts with a database that stores data about different movies as seen in arthouses</p>
+    <div class="container">
+        <h1>The ArtHouse MovieAPI</h1>
+        <h3>Objective</h3>
+        <p>
+            To build the server-side component of a “ArtHouse Movies” web application. The web application will provide users with access to information about different ArtHouse Movies, Directors, and Genres. Users will be able to sign up, update their username, and create a list of their favorite movies.
+        </p>
+        <h3>Intro</h3>
+        <p> A web application that will provide users with access to information about different movies, directors, and genres within ArtHouse flicks . Users will be able to sign up, update their personal information, and create a list of their favorite ArtHouse movies.
+        </p>
+    </div>
+
+    <div class="container">
+        <table class="table table-bordered ">
+            <thead class="table-primary text-center">
+                <tr>
+                    <th scope="col">Description</th>
+                    <th scope="col">URL</th>
+                    <th scope="col">HTTP Method</th>
+                    <th scope="col">Requests body data format</th>
+                    <th scope="col">Response body data format</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Get list of ALL Movies</td>
+                    <td>/movies</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td>A JSON object holding data about all movies: <br>
+                        <code class="text-primary">
+                            [</br>
+                            {</br>
+                                "title": "The Fountain",</br>
+                                "description": "As a modern-day scientist, Tommy is struggling with mortality, desperately searching for the medical breakthrough that will save the life of his cancer-stricken wife, Izzi.",</br>
+                                "genre": {</br>
+                                    "name": "Drama",</br>
+                                    "description": "In film and television, drama is a category or genre of narrative fiction (or semi-fiction) intended to be more serious than humorous in tone."</br>
+                                },</br>
+                                "director": {</br>
+                                    "name": "Darren Aronofsky",</br>
+                                    "bio": "Darren Aronofsky was born February 12, 1969, in Brooklyn, New York. Growing up, Darren was always artistic: he loved classic movies and, as a teenager, he even spent time doing graffiti art. After high school, Darren went to Harvard University to study film (both live-action and animation).",</br>
+                                    "birthyear": "February 12, 1969 in Brooklyn, New York City, New York, USA",</br>
+                                    "deathyear": ""</br>
+                                },</br>
+                                "actors": [</br>
+                                    "Hugh Jackma",</br>
+                                    "Rachel Weisz",</br>
+                                    "Sean Patrick"</br>
+                                ],</br>
+                                "year": 2006,</br>
+                                "score": 7.2,</br>
+                                "rating": "PG-13",</br>
+                                "imageURL": "https://www.imdb.com/title/tt0414993/mediaviewer/rm2671676416/?ref_=tt_ov_i",</br>
+                                "featured": true,</br>
+                                "length": "1h 37m"
+                            }</br>
+                            ]</br>
+                        </code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Return data about a single movie by title to the user</td></br>
+                    <td>/movies/:title</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td>A JSON object holding data on the user to whom the favorite movie was added <br>
+                        <code class="text-primary">
+                            {</br>
+                                "title": "Moon",</br>
+                                "description": "Astronaut Sam Bell has a quintessentially personal encounter toward the end of his three-year stint on the Moon, where he, working alongside his computer, GERTY, sends back to Earth parcels of a resource that has helped diminish our planet's power problems.",</br>
+                                "genre": {</br>
+                                    "name": "Mystery",</br>
+                                    "description": "A mystery film is a genre of film that revolves around the solution of a problem or a crime. It focuses on the efforts of the detective, private investigator or amateur sleuth to solve the mysterious circumstances of an issue by means of clues, investigation, and clever deduction. The plot often centers on the deductive ability, prowess, confidence, or diligence of the detective as he attempts to unravel the crime or situation by piecing together clues and circumstances, seeking evidence, interrogating witnesses, and tracking down a criminal."</br>
+                                },</br>
+                                "director": {</br>
+                                    "name": "Duncan Jones",</br>
+                                    "bio": "Duncan Jones was born on May 30, 1971 in Bromley, Kent, England. He is a director and writer, known for Moon (2009), Source Code (2011) and Mute (2018). He has been married to Rodene Ronquillo since November 6, 2012.",</br>
+                                    "birthyear": "May 30, 1971 in Bromley, Kent, England, UK",</br>
+                                    "deathyear": ""</br>
+                                },</br>
+                                "actors": [</br>
+                                    "Sam Rockwell",</br>
+                                    "Kevin Spacey"</br>
+                                ],</br>
+                                "year": 2009,</br>
+                                "score": 7.8,</br>
+                                "rating": "R",</br>
+                                "imageURL": "https://www.imdb.com/title/tt1182345/mediaviewer/rm1680837376/?ref_=tt_ov_i",</br>
+                                "featured": true,</br>
+                                "length": "1h 37m"</br>
+                            }</br>
+                         </code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Return data about a genre to the user</td>
+                    <td>/movies/genre/:name</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td>A JSON object holding data about a genre</br>
+                        <code class="text-primary">
+                            {</br>
+                                "name": "Mystery",</br>
+                                "description": "A mystery film is a genre of film that revolves around the solution of a problem or a crime. It focuses on the efforts of the detective, private investigator or amateur sleuth to solve the mysterious circumstances of an issue by means of clues, investigation, and clever deduction. The plot often centers on the deductive ability, prowess, confidence, or diligence of the detective as he attempts to unravel the crime or situation by piecing together clues and circumstances, seeking evidence, interrogating witnesses, and tracking down a criminal."</br>
+                            }</br>
+                        </code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Return data about a director to the user</td>
+                    <td>/movies/directors/:name</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td>A JSON object holding data about a director<br>
+                        <code class="text-primary">
+                            {</br>
+                                "name": "Darren Aronofsky",</br>
+                                "bio": "Darren Aronofsky was born February 12, 1969, in Brooklyn, New York. Growing up, Darren was always artistic: he loved classic movies and, as a teenager, he even spent time doing graffiti art. After high school, Darren went to Harvard University to study film (both live-action and animation).",</br>
+                                "birthyear": "February 12, 1969 in Brooklyn, New York City, New York, USA",</br>
+                                "deathyear": ""</br>
+                            } </br>
+                        </code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Register a new user account</td>
+                    <td>/users</td>
+                    <td>POST</td>
+                    <td> A JSON object holding data about a new user</br>
+                        <code class="text-primary">
+                            {</br>
+                                "name" : "Philou",</br>
+                                "favoriteMvies" : []</br>
+                            }</br>
+                        </code>
+                    </td>
+                    <td>A JSON object returning data about the new user with an id <br>
+                        <code class="text-primary">
+                            {</br>
+                                "name": "Philou",</br>
+                                "favoriteMvies": [],</br>
+                                "id": "2abacd36-6163-4223-b99b-fdeee670e50f"</br>
+                            }</br>
+                        </code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Allow users to update their user data (username)</td>
+                    <td>/users/:id</td>
+                    <td>PUT</td>
+                    <td>A JSON object holding data about a user with id</br>
+                        <code class="text-primary">
+                            {<br>
+                                "id": 1,<br>
+                                "name": "Winston",<br>
+                                "email": "",<br>
+                                "favoriteMovies": []<br>
+                            }<br>
+                        </code>
+                    </td>
+                    <td>Returns a JSON object with the updated data of user <br>
+                        <code class="text-primary">
+                            {<br>
+                                "id": 1,<br>
+                                "name": "Winston Muijs",<br>
+                                "email": "",<br>
+                                "favoriteMovies": []<br>
+                            }<br>
+                        </code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>A user adds a movie to the list of favorite movies</td>
+                    <td>/users/:id/:movieTitle</td>
+                    <td>POST</td>
+                    <td>None</td>
+                    <td>Returns a text message that the movie is added to the list of favorites</td>
+                </tr>
+                <tr>
+                    <td>A user removes movie from list of favorites</td>
+                    <td>/users/:id/:movieTitle</td>
+                    <td>DELETE</td>
+                    <td>None</td>
+                    <td>Returns a text message that the movie is removed from the list of favorites</td>
+                </tr>
+                <tr>
+                    <td>Allow existing users to deregister  with there id (showing only a text that a user email has been removed)</td>
+                    <td>/users/:id</td>
+                    <td>DELETE</td>
+                    <td>None</td>
+                    <td>Returns a text message that the user with the id number is removed </td>
+                    
+                </tr>
+                <tr>
+                    <td>Allow existing users to deregister  with there email(showing only a text that a user email has been removed)</td>
+                    <td>/users/:email</td>
+                    <td>DELETE</td>
+                    <td>None</td>
+                    <td>Returns a text message that the user with the email number is removed </td>
+                    
+                </tr>
+                <tr>
+                    <td>Returns a list of ALL users</td>
+                    <td>/users</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td>Returns a JSON object holding data about ALL users<br>
+                        <code class="text-primary">
+                            [<br>
+                            {<br>
+                                "id": 2,<br>
+                                "name": "Bo",<br>
+                                "email": "bo@gmail.com",<br>
+                                "favoriteMovies": [<br>
+                                    "Moon"<br>
+                                ]<br>
+                            },<br>
+                            {<br>
+                                "name": "Philou",<br>
+                                "favoriteMvies": [],<br>
+                                "id": "2abacd36-6163-4223-b99b-fdeee670e50f"<br>
+                            }<br>
+                            ]<br>
+ 
+                        </code>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
   </body>
 </html>
