@@ -357,7 +357,7 @@ app.delete('/users/:id/:movieTitle', (req, res) => {
 
 });
 
-//Deregister of a user with id
+//Deregister of a user with email
 
 app.delete('/users/:email', (req, res) => {
     const {email} = req.params;
