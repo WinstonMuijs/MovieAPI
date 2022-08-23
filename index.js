@@ -369,7 +369,7 @@ app.delete('/users/:email', (req, res) => {
         res.status(400).send(message);
     }else{
         users = users.filter( user => user.email !== email );
-        res.status(201).send(` User with id: ${email} has been removed`);
+        res.status(201).send(` User with ${email} has been removed`);
     }
 
 });
