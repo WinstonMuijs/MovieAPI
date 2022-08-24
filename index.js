@@ -285,7 +285,7 @@ app.get('/movies/:title', (req, res) => {
     if(movie){
         res.status(200).json(movie);
     }else{
-        res.status(400).json("No such movie");
+        res.status(400).send("No such movie");
     }
 });
 
@@ -297,7 +297,7 @@ app.get('/movies/genre/:genreName', (req, res) => {
     if(genre){
         res.status(200).json(genre);
     }else{
-        res.status(400).json("No such genre");
+        res.status(400).send("No such genre");
     }
 });
 
@@ -306,14 +306,27 @@ app.get('/movies/:movieId/directors/:directorId', (req, res) => {
     const {movieId, directorId} = req.params;
     const director = movies.find(movie => movie.director.id == directorId).director;
 
-    let movie = movies.find(movie => movie.id == movieId);
-
+    const movie = movies.find(movie => movie.id == movieId) ;
+    
     if(movie){
         res.status(200).json(director);
     }else{
-        res.status(400).json("No such movie");
+        res.status(400).send("No such movie");
     }
 });
+
+app.get('/director/:directorId', (req, res) => {
+    const {directorId} = req.params;
+    const director = movies.find(movie => movie.director.id == directorId).director;
+
+    
+    if(!director){
+        res.status(400).send("No such director");
+    }else{
+        res.status(200).json(director);
+    }
+});
+
 
 // Create new user
 
