@@ -119,7 +119,7 @@
                 </tr>
                 <tr>
                     <td>Return data about a director to the user</td>
-                    <td>/movies/directors/:name</td>
+                    <td>/movies/:movieId/directors/:directorId</td>
                     <td>GET</td>
                     <td>None</td>
                     <td>A JSON object holding data about a director<br>
@@ -181,15 +181,15 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>A user adds a movie to the list of favorite movies</td>
-                    <td>/users/:id/:movieTitle</td>
+                    <td>A user adds a movie to the list of favorite movies with movie id</td>
+                    <td>/users/:id/favoriteMovies/:movieId</td>
                     <td>POST</td>
                     <td>None</td>
                     <td>Returns a text message that the movie is added to the list of favorites</td>
                 </tr>
                 <tr>
-                    <td>A user removes movie from list of favorites</td>
-                    <td>/users/:id/:movieTitle</td>
+                    <td>A user removes movie from list of favorites with movie id</td>
+                    <td>/users/:id/favoriteMovies/:movieId</td>
                     <td>DELETE</td>
                     <td>None</td>
                     <td>Returns a text message that the movie is removed from the list of favorites</td>
