@@ -1,7 +1,8 @@
 const express = require('express'),
 bodyParser = require('body-parser'),
 uuid = require('uuid'),
-morgan = require('morgan')
+morgan = require('morgan');
+const { toInteger } = require('lodash');
 
 const app = express();
 
@@ -9,12 +10,14 @@ let users = [
     {
         id : 1,
         name: 'Winston',
+        password: 'safsdfggdh',
         email: 'whmuijs@gmail.com',
         favoriteMovies : []
     },
     {
         id : 2,
         name : 'Bo',
+        passord: 'dsfassh',
         email : 'bo@gmail.com',
         favoriteMovies : ['Moon']
     }
@@ -26,6 +29,7 @@ let movies = [
         title: 'The Fountain',
         description: 'As a modern-day scientist, Tommy is struggling with mortality, desperately searching for the medical breakthrough that will save the life of his cancer-stricken wife, Izzi.',
         genre: {
+            id : 1,
             name: 'Drama',
             description: 'In film and television, drama is a category or genre of narrative fiction (or semi-fiction) intended to be more serious than humorous in tone.'
         },
@@ -49,6 +53,7 @@ let movies = [
         title: 'The Eternal Sunshine of the Spotless Mind ',
         description:'When their relationship turns sour, a couple undergoes a medical procedure to have each other erased from their memories.',
         genre: {
+            id : 1,
             name: 'Drama',
             description:'In film and television, drama is a category or genre of narrative fiction (or semi-fiction) intended to be more serious than humorous in tone.'
         },
@@ -72,6 +77,7 @@ let movies = [
         title: 'The Tree of Life',
         description:'The story of a family in Waco, Texas in 1956. The eldest son witnesses the loss of innocence and struggles with his parents conflicting teachings.',
         genre: {
+            id: 1,
             name:'Drama',
             description:'In film and television, drama is a category or genre of narrative fiction (or semi-fiction) intended to be more serious than humorous in tone.'
         },
@@ -95,6 +101,7 @@ let movies = [
         title: '2001: Space Odyssey',
         decription:'After uncovering a mysterious artifact buried beneath the Lunar surface, a spacecraft is sent to Jupiter to find its origins - a spacecraft manned by two men and the supercomputer H.A.L. 9000.',
         genre: {
+            id : 4,
             name: 'Adventure',
             description:'An adventure film is a form of adventure fiction, and is a genre of film. Subgenres of adventure films include swashbuckler films, pirate films, and survival films. Adventure films may also be combined with other film genres such as action, animation, comedy, drama, fantasy, science fiction, family, horror, or war.'
         },
@@ -118,6 +125,7 @@ let movies = [
         title: 'Where The Wild Things Are',
         description:'Yearning for escape and adventure, a young boy runs away from home and sails to an island filled with creatures that take him in as their king.',
         genre: {
+            id : 5,
             name:'Family',
             description:'Family film, is a film genre that contains children or relates to them in the context of home and family.'
         },
@@ -141,11 +149,12 @@ let movies = [
         title: 'Black Swan',
         description:'A committed dancer struggles to maintain her sanity after winning the lead role in a production of Tchaikovsky\'s "Swan Lake".',
         genre: {
+            id : 1,
             name:'Drama',
             description:'In film and television, drama is a category or genre of narrative fiction (or semi-fiction) intended to be more serious than humorous in tone.'
         },
         director: {
-            id : 6,
+            id : 1,
             name:'Darren Aronofsky',
             bio:'Darren Aronofsky was born February 12, 1969, in Brooklyn, New York. Growing up, Darren was always artistic: he loved classic movies and, as a teenager, he even spent time doing graffiti art. After high school, Darren went to Harvard University to study film (both live-action and animation).',
             birthyear:'ebruary 12, 1969 in Brooklyn, New York City, New York, USA',
@@ -164,6 +173,7 @@ let movies = [
         title: 'Blade Runner',
         description:'A blade runner must pursue and terminate four replicants who stole a ship in space, and have returned to Earth to find their creator.',
         genre: {
+            id : 6,
             name:'Action',
             description:'Action film is a film genre in which the protagonist is thrust into a series of events that typically involve violence and physical feats. The genre tends to feature a mostly resourceful hero struggling against incredible odds, which include life-threatening situations, a dangerous villain, or a pursuit which usually concludes in victory for the hero.'
         },
@@ -187,6 +197,7 @@ let movies = [
         title: 'Mulholland Drive',
         description:'After a car wreck on the winding Mulholland Drive renders a woman amnesiac, she and a perky Hollywood-hopeful search for clues and answers across Los Angeles in a twisting venture beyond dreams and reality.',
         genre: {
+            id : 1,
             name:'Drama',
             description:'In film and television, drama is a category or genre of narrative fiction (or semi-fiction) intended to be more serious than humorous in tone.'
         },
@@ -210,6 +221,7 @@ let movies = [
         title: 'Moon',
         description:'Astronaut Sam Bell has a quintessentially personal encounter toward the end of his three-year stint on the Moon, where he, working alongside his computer, GERTY, sends back to Earth parcels of a resource that has helped diminish our planet\'s power problems.',
         genre:{
+            id : 3,
             name:'Mystery',
             description:'A mystery film is a genre of film that revolves around the solution of a problem or a crime. It focuses on the efforts of the detective, private investigator or amateur sleuth to solve the mysterious circumstances of an issue by means of clues, investigation, and clever deduction. The plot often centers on the deductive ability, prowess, confidence, or diligence of the detective as he attempts to unravel the crime or situation by piecing together clues and circumstances, seeking evidence, interrogating witnesses, and tracking down a criminal.'
         },
@@ -233,6 +245,7 @@ let movies = [
         title: 'The Piano',
         description:'In the mid-19th century a mute woman is sent to New Zealand along with her young daughter and prized piano for an arranged marriage to a farmer, but is soon lusted after by a farm worker.',
         genre:{
+            id : 1,
             name:'Drama',
             description:'In film and television, drama is a category or genre of narrative fiction (or semi-fiction) intended to be more serious than humorous in tone.'
         },
@@ -278,9 +291,9 @@ app.get('/movies', (req, res)=> {
 });
 
 //Movie by Title
-app.get('/movies/:title', (req, res) => {
-    const {title} = req.params;
-    const movie = movies.find(movie => movie.title === title);
+app.get('/movies/:movieId', (req, res) => {
+    const {movieId} = req.params;
+    const movie = movies.find( movie => movie.id == movieId);
 
     if(movie){
         res.status(200).json(movie);
@@ -290,9 +303,9 @@ app.get('/movies/:title', (req, res) => {
 });
 
 //Info about Genre
-app.get('/movies/genre/:genreName', (req, res) => {
-    const {genreName} = req.params;
-    const genre = movies.find(movie => movie.genre.name === genreName).genre;
+app.get('/genre/:genreId', (req, res) => {
+    const {genreId} = req.params;
+    const genre = movies.find(movie => movie.genre.id == genreId).genre;
 
     if(genre){
         res.status(200).json(genre);
@@ -302,29 +315,13 @@ app.get('/movies/genre/:genreName', (req, res) => {
 });
 
 //Finding director information
-app.get('/movies/:movieId/directors/:directorId', (req, res) => {
-    const {movieId, directorId} = req.params;
-    const director = movies.find(movie => movie.director.id == directorId).director;
-
-    const movie = movies.find(movie => movie.id == movieId) ;
-    
-    if(movie){
-        res.status(200).json(director);
-    }else{
-        res.status(400).send("No such movie");
-    }
-});
 
 app.get('/director/:directorId', (req, res) => {
     const {directorId} = req.params;
     const director = movies.find(movie => movie.director.id == directorId).director;
-
     
-    if(!director){
-        res.status(400).send("No such director");
-    }else{
-        res.status(200).json(director);
-    }
+    res.status(200).json(director);
+    
 });
 
 
@@ -344,11 +341,11 @@ app.post('/users', (req, res) => {
 });
 
 // Updates username
-app.put('/users/:id', (req, res) => {
-    const {id} = req.params;
+app.put('/users/:userId', (req, res) => {
+    const {userId} = req.params;
     const updatedUser = req.body;
 
-    let user = users.find(user => user.id == id);
+    let user = users.find(user => user.id == userId);
 
     if(!user){
         const message = "There is no user with that id";
