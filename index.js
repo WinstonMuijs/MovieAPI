@@ -28,18 +28,20 @@ let movies = [
         id : 1,
         title: 'The Fountain',
         description: 'As a modern-day scientist, Tommy is struggling with mortality, desperately searching for the medical breakthrough that will save the life of his cancer-stricken wife, Izzi.',
-        genre: {
-            id : 1,
-            name: 'Drama',
-            description: 'In film and television, drama is a category or genre of narrative fiction (or semi-fiction) intended to be more serious than humorous in tone.'
-        },
-        director: {
-            id : 1,
-            name:'Darren Aronofsky',
-            bio: 'Darren Aronofsky was born February 12, 1969, in Brooklyn, New York. Growing up, Darren was always artistic: he loved classic movies and, as a teenager, he even spent time doing graffiti art. After high school, Darren went to Harvard University to study film (both live-action and animation).',
-            birthyear: 'February 12, 1969 in Brooklyn, New York City, New York, USA',
-            deathyear: ''
-        },
+        genreId:1, 
+        // {
+        //     id : 1,
+        //     name: 'Drama',
+        //     description: 'In film and television, drama is a category or genre of narrative fiction (or semi-fiction) intended to be more serious than humorous in tone.'
+        // },
+        directorId: 1,
+        //  {
+        //     id : 1,
+        //     name:'Darren Aronofsky',
+        //     bio: 'Darren Aronofsky was born February 12, 1969, in Brooklyn, New York. Growing up, Darren was always artistic: he loved classic movies and, as a teenager, he even spent time doing graffiti art. After high school, Darren went to Harvard University to study film (both live-action and animation).',
+        //     birthyear: 'February 12, 1969 in Brooklyn, New York City, New York, USA',
+        //     deathyear: ''
+        // },
         actors : ['Hugh Jackma','Rachel Weisz', 'Sean Patrick'],
         year: 2006 ,
         score: 7.2,
@@ -178,7 +180,7 @@ let movies = [
             description:'Action film is a film genre in which the protagonist is thrust into a series of events that typically involve violence and physical feats. The genre tends to feature a mostly resourceful hero struggling against incredible odds, which include life-threatening situations, a dangerous villain, or a pursuit which usually concludes in victory for the hero.'
         },
         director: { 
-            id : 7,
+            id : 6,
             name:'Ridley Scott',
             bio:'Ridley Scott was born on November 30, 1937 in South Shields, Tyne and Wear. His father was an officer in the Royal Engineers and the family followed him as his career posted him throughout the United Kingdom and Europe before they eventually returned to Teesside. Scott wanted to join the Royal Army (his elder brother Frank had already joined the Merchant Navy) but his father encouraged him to develop his artistic talents instead and so he went to West Hartlepool College of Art and then London\'s Royal College of Art where he helped found the film department.',
             birthyear:'November 30, 1937 in South Shields, County Durham, England, UK',
@@ -202,7 +204,7 @@ let movies = [
             description:'In film and television, drama is a category or genre of narrative fiction (or semi-fiction) intended to be more serious than humorous in tone.'
         },
         director: {
-            id : 8,
+            id : 7,
             name:'David Lynch',
             bio:'Born in precisely the kind of small-town American setting so familiar from his films, David Lynch spent his childhood being shunted from one state to another as his research scientist father kept getting relocated. He attended various art schools, married Peggy Lynch and then fathered future director Jennifer Lynch shortly after he turned 21.',
             birthyear:'January 20, 1946 in Missoula, Montana, USA',
@@ -226,7 +228,7 @@ let movies = [
             description:'A mystery film is a genre of film that revolves around the solution of a problem or a crime. It focuses on the efforts of the detective, private investigator or amateur sleuth to solve the mysterious circumstances of an issue by means of clues, investigation, and clever deduction. The plot often centers on the deductive ability, prowess, confidence, or diligence of the detective as he attempts to unravel the crime or situation by piecing together clues and circumstances, seeking evidence, interrogating witnesses, and tracking down a criminal.'
         },
         director: {
-            id : 9,
+            id : 8,
             name:'Duncan Jones',
             bio:'Duncan Jones was born on May 30, 1971 in Bromley, Kent, England. He is a director and writer, known for Moon (2009), Source Code (2011) and Mute (2018). He has been married to Rodene Ronquillo since November 6, 2012.',
             birthyear:'May 30, 1971 in Bromley, Kent, England, UK',
@@ -250,7 +252,7 @@ let movies = [
             description:'In film and television, drama is a category or genre of narrative fiction (or semi-fiction) intended to be more serious than humorous in tone.'
         },
         director: {
-            id : 10,
+            id : 9,
             name:'Jane Campion',
             bio:'Jane Campion was born in Wellington, New Zealand, and now lives in Sydney, New South Wales, Australia. Having graduated with a BA in Anthropology from Victoria University of Wellington in 1975, and a BA, with a painting major, at Sydney College of the Arts in 1979, she began filmmaking in the early 1980s, attending the Australian Film Television and Radio School (AFTRS). Her first short film, Peel (1982) won the Palme D\'Or at the Cannes Film Festival in 1986.',
             birthyear:' April 30, 1954 in Wellington, New Zealand',
@@ -265,6 +267,109 @@ let movies = [
         length: '2h 01m'
     }
 ];
+
+let genres = [
+    {
+        id : 1,
+        name: 'Drama',
+        description: 'In film and television, drama is a category or genre of narrative fiction (or semi-fiction) intended to be more serious than humorous in tone.'
+    },
+    {
+        id : 2,
+        name:'',
+        description:'A mystery film is a genre of film that revolves around the solution of a problem or a crime. It focuses on the efforts of the detective, private investigator or amateur sleuth to solve the mysterious circumstances of an issue by means of clues, investigation, and clever deduction. The plot often centers on the deductive ability, prowess, confidence, or diligence of the detective as he attempts to unravel the crime or situation by piecing together clues and circumstances, seeking evidence, interrogating witnesses, and tracking down a criminal.'
+    },
+    {
+        id : 3,
+        name:'Mystery',
+        description:'A mystery film is a genre of film that revolves around the solution of a problem or a crime. It focuses on the efforts of the detective, private investigator or amateur sleuth to solve the mysterious circumstances of an issue by means of clues, investigation, and clever deduction. The plot often centers on the deductive ability, prowess, confidence, or diligence of the detective as he attempts to unravel the crime or situation by piecing together clues and circumstances, seeking evidence, interrogating witnesses, and tracking down a criminal.'
+    },
+    {
+        id : 4,
+        name: 'Adventure',
+        description:'An adventure film is a form of adventure fiction, and is a genre of film. Subgenres of adventure films include swashbuckler films, pirate films, and survival films. Adventure films may also be combined with other film genres such as action, animation, comedy, drama, fantasy, science fiction, family, horror, or war.'
+    },
+    {
+        id : 5,
+        name:'Family',
+        description:'Family film, is a film genre that contains children or relates to them in the context of home and family.'
+    },
+    {
+        id : 6,
+        name:'Action',
+        description:'Action film is a film genre in which the protagonist is thrust into a series of events that typically involve violence and physical feats. The genre tends to feature a mostly resourceful hero struggling against incredible odds, which include life-threatening situations, a dangerous villain, or a pursuit which usually concludes in victory for the hero.'
+    },
+    
+
+
+]
+
+let directors = [
+    {
+        id : 1,
+        name:'Darren Aronofsky',
+        bio: 'Darren Aronofsky was born February 12, 1969, in Brooklyn, New York. Growing up, Darren was always artistic: he loved classic movies and, as a teenager, he even spent time doing graffiti art. After high school, Darren went to Harvard University to study film (both live-action and animation).',
+        birthyear: 'February 12, 1969 in Brooklyn, New York City, New York, USA',
+        deathyear: ''
+    },
+    {
+        id : 2,
+        name: 'Michel Gondry',
+        bio: 'He grew up in Versailles with a family who was very influenced by pop music. When he was young, Gondry wanted to be a painter or an inventor. In the 80s he entered in an art school in Paris where he could develop his graphic skills and where he also met friends with whom he created a pop-rock band called Oui-Oui.',
+        birthyear:'May 8, 1963 in Versailles, Seine-et-Oise [now Yvelines], France',
+        deathyear: ''
+    },
+    {
+        id : 3,
+        name: 'Terrence Malick',
+        bio:'Terrence Malick was born in Ottawa, Illinois. His family subsequently lived in Oklahoma and he went to school in Austin, Texas. He did his undergraduate work at Harvard, graduating summa cum laude with a degree in philosophy in 1965.',
+        birthyear:'November 30, 1943 in Ottawa, Illinois, USA',
+        deathyear: ''
+    },
+    {
+        id : 4,
+        name: 'Stanley Kubrick',
+        bio:'Stanley Kubrick was born in Manhattan, New York City, to Sadie Gertrude (Perveler) and Jacob Leonard Kubrick, a physician. His family were Jewish immigrants (from Austria, Romania, and Russia). Stanley was considered intelligent, despite poor grades at school. ',
+        birthyear:'July 26, 1928 in New York City, New York, USA',
+        deathyear:'March 7, 1999 (age 70) in Harpenden, Hertfordshire, England, UK'
+    },
+    {
+        id : 5,
+        name: 'Spike Jonze',
+        bio:'Spike Jonze made up one-third (along with Andy Jenkins and Mark Lewman) of the triumvirate of genius minds behind Dirt Magazine, the brother publication of the much lamented ground-breaking Sassy Magazine. These three uncommon characters were all editors for Grand Royal Magazine as well, under the direction of Mike D and Adam Horovitz and Adam Yauch before the sad demise of Grand Royal Records. Jonze was also responsible for directing the famous Beastie Boys: Sabotage (1994) short film as well as numerous other music videos for various artists.',
+        birthyear:'October 22, 1969 in Rockville, Maryland, USA',
+        deathyear:''
+    },
+    { 
+        id : 6,
+        name:'Ridley Scott',
+        bio:'Ridley Scott was born on November 30, 1937 in South Shields, Tyne and Wear. His father was an officer in the Royal Engineers and the family followed him as his career posted him throughout the United Kingdom and Europe before they eventually returned to Teesside. Scott wanted to join the Royal Army (his elder brother Frank had already joined the Merchant Navy) but his father encouraged him to develop his artistic talents instead and so he went to West Hartlepool College of Art and then London\'s Royal College of Art where he helped found the film department.',
+        birthyear:'November 30, 1937 in South Shields, County Durham, England, UK',
+        deathyear:''
+    },
+    {
+        id : 7,
+        name:'David Lynch',
+        bio:'Born in precisely the kind of small-town American setting so familiar from his films, David Lynch spent his childhood being shunted from one state to another as his research scientist father kept getting relocated. He attended various art schools, married Peggy Lynch and then fathered future director Jennifer Lynch shortly after he turned 21.',
+        birthyear:'January 20, 1946 in Missoula, Montana, USA',
+        deathyear:''
+    },
+    {
+        id : 8,
+        name:'Duncan Jones',
+        bio:'Duncan Jones was born on May 30, 1971 in Bromley, Kent, England. He is a director and writer, known for Moon (2009), Source Code (2011) and Mute (2018). He has been married to Rodene Ronquillo since November 6, 2012.',
+        birthyear:'May 30, 1971 in Bromley, Kent, England, UK',
+        deathyear:''
+    },
+    {
+        id : 9,
+        name:'Jane Campion',
+        bio:'Jane Campion was born in Wellington, New Zealand, and now lives in Sydney, New South Wales, Australia. Having graduated with a BA in Anthropology from Victoria University of Wellington in 1975, and a BA, with a painting major, at Sydney College of the Arts in 1979, she began filmmaking in the early 1980s, attending the Australian Film Television and Radio School (AFTRS). Her first short film, Peel (1982) won the Palme D\'Or at the Cannes Film Festival in 1986.',
+        birthyear:' April 30, 1954 in Wellington, New Zealand',
+        deathyear:''
+    },
+
+]
 
 //Setup logger to terminal
 app.use(morgan('common'));
@@ -303,9 +408,9 @@ app.get('/movies/:movieId', (req, res) => {
 });
 
 //Info about Genre
-app.get('/genre/:genreId', (req, res) => {
+app.get('/genres/:genreId', (req, res) => {
     const {genreId} = req.params;
-    const genre = movies.find(movie => movie.genre.id == genreId).genre;
+    const genre = genres.find(genre => genre.id == genreId);
 
     if(genre){
         res.status(200).json(genre);
@@ -316,11 +421,16 @@ app.get('/genre/:genreId', (req, res) => {
 
 //Finding director information
 
-app.get('/director/:directorId', (req, res) => {
+app.get('/directors/:directorId', (req, res) => {
     const {directorId} = req.params;
-    const director = movies.find(movie => movie.director.id == directorId).director;
+    const director = directors.find(director => director.id == directorId);
     
-    res.status(200).json(director);
+    if(director){
+        res.status(200).json(director);
+    }else{
+        res.status(400).send("No such director");
+    }
+   
     
 });
 
