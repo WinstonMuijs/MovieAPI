@@ -12,14 +12,21 @@ let users = [
         name: 'Winston',
         password: 'safsdfggdh',
         email: 'whmuijs@gmail.com',
-        favoriteMovies : []
+        favoriteMovies : [1,5,9]
     },
     {
         id : 2,
-        name : 'Bo',
+        name : 'Bo Kundersma',
         passord: 'dsfassh',
-        email : 'bo@gmail.com',
-        favoriteMovies : ['Moon']
+        email : 'boKun@gmail.com',
+        favoriteMovies : [2,4,6]
+    },
+    {
+        id : 3,
+        name : 'Lisa Jnssen',
+        passord: 'jkjdkfkji',
+        email : 'lisaJan@gmail.com',
+        favoriteMovies : [3,7,8]   
     }
 ];
 
@@ -396,6 +403,17 @@ app.get('/movies', (req, res)=> {
 });
 
 //Movie by Title
+
+app.get('/movies/:title', (req, res) => {
+    const {title} = req.params;
+    const movie = movies.find( movie => movie.title == title);
+
+    if(movie){
+        res.status(200).json(movie);
+    }else{
+        res.status(400).send("No such movie");
+    }
+});
 app.get('/movies/:movieId', (req, res) => {
     const {movieId} = req.params;
     const movie = movies.find( movie => movie.id == movieId);
@@ -436,7 +454,6 @@ app.get('/directors/:directorId', (req, res) => {
 
 
 // Create new user
-
 app.post('/users', (req, res) => {
     let newUser = req.body;
 
@@ -447,6 +464,19 @@ app.post('/users', (req, res) => {
         newUser.id = uuid.v4();
         users.push(newUser);
         res.status(201).json(newUser);
+    }
+});
+
+//Find a user with userName
+
+app.get('/users/:userName', (req, res) => {
+    const {userName} = req.params;
+    const user = users.find( user=> user.name === userName);
+
+    if(user){
+        res.status(200).json(user);
+    }else{
+        res.status(400).send("No such user");
     }
 });
 
