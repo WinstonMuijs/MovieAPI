@@ -110,6 +110,28 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>Return data about the genres</td>
+                    <td>/genre</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td>Returns a JSON object with data about All Genres</br>
+                        <code class="text-primary">
+                            [</br>
+                            {</br>
+                                "id" : 3,</br>
+                                "name": "Mystery",</br>
+                                "description": "A mystery film is a genre of film that revolves around the solution of a problem or a crime. It focuses on the efforts of the detective, private investigator or amateur sleuth to solve the mysterious circumstances of an issue by means of clues, investigation, and clever deduction. The plot often centers on the deductive ability, prowess, confidence, or diligence of the detective as he attempts to unravel the crime or situation by piecing together clues and circumstances, seeking evidence, interrogating witnesses, and tracking down a criminal."</br>
+                            {</br>
+                                "id" : 5,</br>
+                                "name": "Family",</br>
+                                "description": "family film, is a film genre that contains children or relates to them in the context of home and family. Children's films are made specifically for children and not necessarily for the general audience, while family films are made for a wider appeal with a general audience in mind. Children's films come in several major genres like realism, fantasy, adventure, war, musicals, comedy, and literary adaptations."</br>
+                            }</br>
+                            }</br>
+                            ]</br>
+                        </code>
+                    </td>
+                </tr>
+                <tr>
                     <td>Return data about a genre to the user</td>
                     <td>/genre/:genreId</td>
                     <td>GET</td>
@@ -135,7 +157,7 @@
                                 "id" : 1,</br>
                                 "name": "Darren Aronofsky",</br>
                                 "bio": "Darren Aronofsky was born February 12, 1969, in Brooklyn, New York. Growing up, Darren was always artistic: he loved classic movies and, as a teenager, he even spent time doing graffiti art. After high school, Darren went to Harvard University to study film (both live-action and animation).",</br>
-                                "birthyear": "February 12, 1969 in Brooklyn, New York City, New York, USA",</br>
+                                "birthyear": "1969-02-12",</br>
                                 "deathyear": ""</br>
                             } </br>
                         </code>
@@ -145,10 +167,13 @@
                     <td>Register a new user account</td>
                     <td>/users</td>
                     <td>POST</td>
-                    <td> A JSON object holding data about a new user with ID</br>
+                    <td> A JSON object holding data about a new user with ID with required fields</br>
                         <code class="text-primary">
                             {</br>
-                                "name" : "Philou",</br>
+                                "name" : "Philou",(required)</br>
+                                "password": "wklsasv",(required)</br>
+                                "email" : "dwhwqjo@dsfjsdf.com",(required)</br>
+                                "birthday" : "2021-10-01",</br>
                                 "favoriteMvies" : []</br>
                             }</br>
                         </code>
@@ -156,8 +181,11 @@
                     <td>A JSON object returning data about the new user with an id <br>
                         <code class="text-primary">
                             {</br>
-                                "name": "Philou",</br>
-                                "favoriteMvies": [],</br>
+                                "name" : "Philou",</br>
+                                "password": "wklsasv",</br>
+                                "email" : "dwhwqjo@dsfjsdf.com",</br>
+                                "birthday" : "2021-10-01",</br>
+                                "favoriteMvies" : []</br>
                                 "id": "2abacd36-6163-4223-b99b-fdeee670e50f"</br>
                             }</br>
                         </code>
@@ -175,6 +203,7 @@
                                 "name": "Winston",</br>
                                 "password": "safsdfggdh",</br>
                                 "email": "whmuijs@gmail.com",</br>
+                                "birthday": "1972-08-24"
                                 "favoriteMovies": [</br>
                                     1,</br>
                                     5,</br>
@@ -188,12 +217,13 @@
                     <td>Allow users to update their user data</td>
                     <td>/users/:userId</td>
                     <td>PUT</td>
-                    <td>A JSON object holding data about a user with id</br>
+                    <td>A JSON object holding data about a user with id with required fields</br>
                         <code class="text-primary">
                             {<br>
                                 "id": 1,<br>
-                                "name": "Winston",<br>
-                                "email": "",<br>
+                                "name": "Winston",(required)<br>
+                                "password": "safsdfggdh",(required)</br>
+                                "email": "whmuijs@gmail.com",(required)<br>
                                 "favoriteMovies": []<br>
                             }<br>
                         </code>
@@ -203,11 +233,19 @@
                             {<br>
                                 "id": 1,<br>
                                 "name": "Winston Muijs",<br>
+                                "password": "safsdfggdh",</br>
                                 "email": "",<br>
-                                "favoriteMovies": []<br>
+                                "favoriteMovies": [1,2]<br>
                             }<br>
                         </code>
                     </td>
+                </tr>
+                <tr>
+                    <td>Delete a useraccount by name</td>
+                    <td>/users/:name</td>
+                    <td>DELETE</td>
+                    <td>None</td>
+                    <td>Returns a text message that the user with that name is deleted</td>
                 </tr>
                 <tr>
                     <td>A user adds a movie to the list of favorite movies with movie id</td>
