@@ -99,13 +99,13 @@ app.get('/directors/:directorId', (req, res) => {
 
 // Create new user 
 app.post('/users', (req, res) => {
-   users.findOne({name : req.body.name}
-    )
+   users.findOne({name : req.body.name})
     .then((user) => {
         if(user){
             return res.status(400).send(req.body.name + 'already exists');
         }else{
             users.create({
+                _id: req.body._id,
                 name: req.body.name,
                 password: req.body.password,
                 email: req.body.email,
@@ -125,7 +125,6 @@ app.post('/users', (req, res) => {
 });
 
 //Find a user with name
-
 app.get('/users/:name', (req, res) => {
     users.findOne({name: req.params.name
     })
@@ -160,22 +159,6 @@ app.put('/users/:userId', (req, res) => {
         });
     });
 
-//Delete a user by name
-app.delete('/users/:name', (req, res) => {
-    users.findOneAndRemove({name : req.body.name})
-    .then((user) => {
-        if(!user){
-            return res.status(400).send(req.body.name + 'was not found');
-        }else {
-            res.status(200).send(req.params.name + ' was deleted.');
-        }
-    })
-    .catch((err) => {
-        console.error(err);
-        res.status(500).send('Error:' + err);
-    });
-});
-
 // Create new movie to list of favorites
 app.post('/users/:userId/favoriteMovies/:movieId', (req, res) => {
     users.findOneAndUpdate({_id : req.params.userId}, {
@@ -193,7 +176,7 @@ app.post('/users/:userId/favoriteMovies/:movieId', (req, res) => {
 });
 
 //Delete a movie fom list of favorites
-app.post('/users/:userId/favoriteMovies/:movieId', (req, res) => {
+app.delete('/users/:userId/favoriteMovies/:movieId', (req, res) => {
     users.findOneAndUpdate({_id : req.params.userId}, {
         $pull: {favoriteMovies : req.params.movieId}
     },
@@ -210,21 +193,19 @@ app.post('/users/:userId/favoriteMovies/:movieId', (req, res) => {
 
 
 //Delete user with email
-
 app.delete('/users/:email', (req, res) => {
-    users.findOneAndRemove({email : req.body.email})
+    users.findOneAndRemove({email: req.params.email})
     .then((user) => {
         if(!user){
-            return res.status(400).send(req.body.email + 'was not found');
+            return res.status(400).send(req.params.email + 'was not found');
         }else {
-            res.status(200).send('User with email: ' + req.params.email + ' was deleted.');
+            res.status(200).send(req.params.email + ' was deleted.');
         }
     })
     .catch((err) => {
         console.error(err);
         res.status(500).send('Error:' + err);
     });
-
 });
 
 
