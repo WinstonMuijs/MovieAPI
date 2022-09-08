@@ -27,6 +27,13 @@ app.use(express.static('public'));
 
 //body parser
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
+//import of auth.js
+let auth = require('./auth')(app);
+//import passport.js
+const passport = require('passport');
+require('./passport');
 
 //GET requests
 app.get('/', (req, res)=>{
