@@ -1,6 +1,6 @@
 const express = require('express'),
 bodyParser = require('body-parser'),
-// uuid = require('uuid'),
+uuid = require('uuid'),
 morgan = require('morgan');
 const { toInteger } = require('lodash');
 const mongoose = require('mongoose');
@@ -11,6 +11,8 @@ const movies = Models.Movie;
 const users = Models.User;
 const genres = Models.Genre;
 const directors = Models.Director;
+
+const {check, validationResult} = require('express-validator')
 
 mongoose.connect('mongodb://localhost:27017/[artHouseDB]',{useNewUrlParser: true, useUnifiedTopology: true},() => {
     console.log("connected")
@@ -121,9 +123,23 @@ app.get('/directors/:directorId',passport.authenticate('jwt', { session: false})
 
 
 // Create new user 
-app.post('/users', (req, res) => {
-   let hashPassword = users.hashPassword(req.body.password); 
-   users.findOne({name : req.body.name})
+app.post('/users',
+[
+    check('name', 'name is required').isLength({min: 5}),
+    check('name', 'name contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('password', 'password is required').not().isEmpty(),
+    check('email', 'email does not appear to be valid').isEmail()
+  ], 
+  (req, res) => {
+
+  // check the validation object for errors
+    let errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+    let hashPassword = users.hashPassword(req.body.password); 
+    users.findOne({name : req.body.name})
     .then((user) => {
         if(user){
             return res.status(400).send(req.body.name + ' already exists');
@@ -161,7 +177,24 @@ app.get('/users/:name',passport.authenticate('jwt', { session: false}), (req, re
 });
 
 // Updates username
-app.put('/users/:userId',passport.authenticate('jwt', { session: false}), (req, res) => {
+app.put('/users/:userId',passport.authenticate('jwt', { session: false}),
+[
+    // check('_id', 'ID is required').isIn(),
+    check('name', 'name is required').isLength({min: 5}),
+    check('name', 'name contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('password', 'password is required').not().isEmpty(),
+    check('email', 'email does not appear to be valid').isEmail()
+  ], 
+  (req, res) => {
+
+  // check the validation object for errors
+    let errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+
+
     users.findOneAndUpdate({_id : req.params.userId},
         {$set: 
             {
