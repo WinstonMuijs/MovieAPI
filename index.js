@@ -124,45 +124,42 @@ app.get('/directors/:directorId',passport.authenticate('jwt', { session: false})
 
 // Create new user 
 app.post('/users',
-[
-    check('name', 'name is required').isLength({min: 5}),
-    check('name', 'name contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-    check('password', 'password is required').not().isEmpty(),
-    check('email', 'email does not appear to be valid').isEmail()
-  ], 
-  (req, res) => {
-
-  // check the validation object for errors
-    let errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
-    }
-    let hashPassword = users.hashPassword(req.body.password); 
-    users.findOne({name : req.body.name})
-    .then((user) => {
-        if(user){
-            return res.status(400).send(req.body.name + ' already exists');
-        }else{
-            users.create({
-                _id: req.body._id,
-                name: req.body.name,
-                password: hashPassword,
-                email: req.body.email,
-                birthday: req.body.birthday,
-                favoriteMovies: req.body.favoriteMovies
-            }).then((user) =>{res.status(201).json(user)})
-            .catch((error) => {
-                console.error(error);
-                res.status(500).send('Error:' + error);
-            })
+    [
+        check('name', 'name is required').isLength({min: 5}),
+        check('name', 'name contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+        check('password', 'password is required').not().isEmpty(),
+        check('email', 'email does not appear to be valid').isEmail()
+    ], (req, res) => {
+        let errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(422).json({ errors: errors.array() });
         }
-    })
-    .catch((error) => {
-        console.error(error);
-        res.stutas(500).send('Error' + error);
-    });
-});
+        let hashedPassword = users.hashPassword(req.body.password); 
+        users.findOne({name : req.body.name})
+        .then((user) => {
+            if(user){
+                return res.status(400).send(req.body.name + ' already exists');
+            }else{
+                users.create({
+                    _id: req.body._id,
+                    name: req.body.name,
+                    password: hashedPassword,
+                    email: req.body.email,
+                    birthday: req.body.birthday,
+                    favoriteMovies: req.body.favoriteMovies
+                }).then((user) =>{res.status(201).json(user)})
+                .catch((error) => {
+                    console.error(error);
+                    res.status(500).send('Error:' + error);
+                })
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+            res.stutas(500).send('Error' + error);
+        });
+    }
+);
 
 //Find a user with name
 app.get('/users/:name',passport.authenticate('jwt', { session: false}), (req, res) => {
@@ -178,43 +175,38 @@ app.get('/users/:name',passport.authenticate('jwt', { session: false}), (req, re
 
 // Updates username
 app.put('/users/:userId',passport.authenticate('jwt', { session: false}),
-[
+    [
     // check('_id', 'ID is required').isIn(),
-    check('name', 'name is required').isLength({min: 5}),
-    check('name', 'name contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-    check('password', 'password is required').not().isEmpty(),
-    check('email', 'email does not appear to be valid').isEmail()
-  ], 
-  (req, res) => {
-
-  // check the validation object for errors
-    let errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
-    }
-
-
-    users.findOneAndUpdate({_id : req.params.userId},
-        {$set: 
-            {
-                name: req.body.name,
-                password: req.body.password,
-                email: req.body.email,
-                birthday: req.body.birthday,
-                favoriteMovies: req.body.favoriteMovies
-            }
-        },
-        {new: true},
-        (err, updatedUser) => {
-            if(err) {
-                console.error(err);
-                res.status(500).send('Error: ' + err);
-            }else {
-                res.json(updatedUser);
-            }
-        });
-    });
+        check('name', 'name is required').isLength({min: 5}),
+        check('name', 'name contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+        check('password', 'password is required').not().isEmpty(),
+        check('email', 'email does not appear to be valid').isEmail()
+    ],  (req, res) => {
+        let errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(422).json({ errors: errors.array() });
+        }
+        users.findOneAndUpdate({_id : req.params.userId},
+            {$set: 
+                {
+                    name: req.body.name,
+                    password: req.body.password,
+                    email: req.body.email,
+                    birthday: req.body.birthday,
+                    favoriteMovies: req.body.favoriteMovies
+                }
+            },
+            {new: true},
+            (err, updatedUser) => {
+                if(err) {
+                    console.error(err);
+                    res.status(500).send('Error: ' + err);
+                }else {
+                    res.json(updatedUser);
+                }
+            });
+        }
+);
 
 // Create new movie to list of favorites
 app.post('/users/:userId/favoriteMovies/:movieId',passport.authenticate('jwt', { session: false}), (req, res) => {
