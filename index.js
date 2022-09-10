@@ -5,6 +5,7 @@ morgan = require('morgan');
 const { toInteger } = require('lodash');
 const mongoose = require('mongoose');
 const Models = require('./models.js');
+const cors = require('cors');
 
 const movies = Models.Movie;
 const users = Models.User;
@@ -17,6 +18,7 @@ mongoose.connect('mongodb://localhost:27017/[artHouseDB]',{useNewUrlParser: true
 e => {console.log(e)
 });
 
+
 const app = express();
 
 //Setup logger to terminal
@@ -28,6 +30,19 @@ app.use(express.static('public'));
 //body parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+
+app.use(cors({
+    origin: (origin, callback) => {
+      if(!origin) return callback(null, true);
+      if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
+        let message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
+        return callback(new Error(message ), false);
+      }
+      return callback(null, true);
+    }
+}));
 
 //import of auth.js
 let auth = require('./auth')(app);
@@ -107,6 +122,7 @@ app.get('/directors/:directorId',passport.authenticate('jwt', { session: false})
 
 // Create new user 
 app.post('/users', (req, res) => {
+   let hashPassword = users.hashPassword(req.body.password); 
    users.findOne({name : req.body.name})
     .then((user) => {
         if(user){
@@ -115,7 +131,7 @@ app.post('/users', (req, res) => {
             users.create({
                 _id: req.body._id,
                 name: req.body.name,
-                password: req.body.password,
+                password: hashPassword,
                 email: req.body.email,
                 birthday: req.body.birthday,
                 favoriteMovies: req.body.favoriteMovies
@@ -225,6 +241,7 @@ app.use((err, req, res, next) => {
   
 
 //listen for requests
-app.listen(8080, ()=>{
-    console.log('Your app is listening on port 8080.');
-})
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0',() => {
+ console.log('Listening on Port ' + port);
+});
