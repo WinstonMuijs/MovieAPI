@@ -98,6 +98,15 @@ app.get('/genres',passport.authenticate('jwt', { session: false}), (req, res)=> 
     });
 });
 
+app.get('/directors',passport.authenticate('jwt', { session: false}), (req, res)=> {
+    directors.find().then((directors) => {
+        res.status(201).json(directors);
+    }).catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    });
+});
+
 //Movie by ID
 app.get('/movies/:movieId',passport.authenticate('jwt', { session: false}), (req, res) => {
     movies.findOne({_id: req.params.movieId}).then((movie) => {
