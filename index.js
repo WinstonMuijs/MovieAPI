@@ -14,12 +14,22 @@ const directors = Models.Director;
 
 const {check, validationResult} = require('express-validator')
 
-mongoose.connect('mongodb://localhost:27017/[artHouseDB]',{useNewUrlParser: true, useUnifiedTopology: true},() => {
-    console.log("connected")
-},
-e => {console.log(e)
-});
+// mongoose.connect('mongodb://localhost:27017/[artHouseDB]',{useNewUrlParser: true, useUnifiedTopology: true},() => {
+//     console.log("connected")
+// },
+// e => {console.log(e)
+// });
 
+mongoose.connect(process.env.CONNECTION_URI,
+{
+    useNewUrlParser: true, 
+    useUnifiedTopology: true
+},() => {
+    console.log("connected");
+},
+e => {console.log(e);
+}
+);
 
 const app = express();
 
