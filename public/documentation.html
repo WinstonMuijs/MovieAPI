@@ -132,6 +132,37 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>Return data about the directors</td>
+                    <td>/directors</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td>Returns a JSON object with data about All directors</br>
+                        <code class="text-primary">
+                            [</br>
+                            {</br>
+                                "id" : 1,</br>
+                                "name": "Darren Aronofsky",</br>
+                                "bio": "Darren Aronofsky was born February 12, 1969, in Brooklyn, New York. Growing up, Darren was always artistic: he loved classic movies and, as a teenager, he even spent time doing graffiti art. After high school, Darren went to Harvard University to study film (both live-action and animation).",</br>
+                                "birthyear": "1969-02-12",</br>
+                                "deathyear": ""</br>
+                            }, </br>
+                            {</br>
+                                "_id": 7,</br>
+                                "name": "David Lynch",</br>
+                                "bio": "Born in precisely the kind of small-town American setting so familiar from his films, David Lynch spent his childhood being shunted from one state to another as his research scientist father kept getting relocated. He attended various art schools, married Peggy Lynch and then fathered future director Jennifer Lynch shortly after he turned 21.",</br>
+                                "birthyear": "1946-01-20T00:00:00.000Z"</br>
+                            },</br>
+                            {</br>
+                                "_id": 2,</br>
+                                "name": "Michel Gondry",</br>
+                                "bio": "He grew up in Versailles with a family who was very influenced by pop music. When he was young, Gondry wanted to be a painter or an inventor. In the 80s he entered in an art school in Paris where he could develop his graphic skills and where he also met friends with whom he created a pop-rock band called Oui-Oui.",</br>
+                                "birthyear": "1963-05-08T00:00:00.000Z"</br>
+                            }</br>
+                            ]</br>
+                        </code>
+                    </td>
+                </tr>
+                <tr>
                     <td>Return data about a genre to the user</td>
                     <td>/genre/:genreId</td>
                     <td>GET</td>
