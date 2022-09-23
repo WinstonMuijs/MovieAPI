@@ -1,3 +1,4 @@
+//Import of middleware and modeling library.
 const express = require('express'),
 bodyParser = require('body-parser'),
 uuid = require('uuid'),
@@ -7,11 +8,13 @@ const mongoose = require('mongoose');
 const Models = require('./models.js');
 const cors = require('cors');
 
+//Models 
 const movies = Models.Movie;
 const users = Models.User;
 const genres = Models.Genre;
 const directors = Models.Director;
 
+//Express-validator
 const {check, validationResult} = require('express-validator')
 
 // mongoose.connect('mongodb://localhost:27017/[artHouseDB]',{useNewUrlParser: true, useUnifiedTopology: true},() => {
@@ -20,6 +23,7 @@ const {check, validationResult} = require('express-validator')
 // e => {console.log(e)
 // });
 
+//Mongoose connecting with Heroku
 mongoose.connect(process.env.CONNECTION_URI,
 {
     useNewUrlParser: true, 
@@ -39,12 +43,14 @@ app.use(morgan('common'));
 //Setup express.static for documentation
 app.use(express.static('public'));
 
-//body parser
+//Body parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+//Allowed domains 
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com','http://localhost:1234'];
 
+//CORS
 app.use(cors({
     origin: (origin, callback) => {
       if(!origin) return callback(null, true);
@@ -79,7 +85,7 @@ app.get('/users',passport.authenticate('jwt', { session: false}), (req, res)=> {
 });
 
 //List of Movies
-app.get('/movies',passport.authenticate('jwt', { session: false}), (req, res)=> {
+app.get('/movies',/*passport.authenticate('jwt', { session: false}),*/ (req, res) => {
     movies.find().then((movies) => {
         res.status(201).json(movies);
     }).catch((err) => {
@@ -98,6 +104,7 @@ app.get('/genres',passport.authenticate('jwt', { session: false}), (req, res)=> 
     });
 });
 
+//List of Directors
 app.get('/directors',passport.authenticate('jwt', { session: false}), (req, res)=> {
     directors.find().then((directors) => {
         res.status(201).json(directors);
@@ -284,7 +291,7 @@ app.use((err, req, res, next) => {
 });
   
 
-//listen for requests
+//listen on port
 const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0',() => {
  console.log('Listening on Port ' + port);
