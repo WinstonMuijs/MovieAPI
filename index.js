@@ -157,12 +157,14 @@ app.post('/users',
         check('email', 'email does not appear to be valid').isEmail()
     ], (req, res) => {
         let errors = validationResult(req);
+        console.log(errors);
         if (!errors.isEmpty()) {
             return res.status(422).json({ errors: errors.array() });
         }
         let hashedPassword = users.hashPassword(req.body.password); 
         users.findOne({name : req.body.name})
         .then((user) => {
+            console.log(user);
             if(user){
                 return res.status(400).send(req.body.name + ' already exists');
             }else{
@@ -181,7 +183,7 @@ app.post('/users',
         })
         .catch((error) => {
             console.error(error);
-            res.stutas(500).send('Error' + error);
+            res.status(500).send('Error' + error);
         });
     }
 );
