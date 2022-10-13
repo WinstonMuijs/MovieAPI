@@ -1,13 +1,13 @@
 //Import of middleware and modeling library.
 const express = require('express'),
 bodyParser = require('body-parser'),
-uuid = require('uuid'),
+
 morgan = require('morgan');
 const { toInteger } = require('lodash');
 const mongoose = require('mongoose');
 const Models = require('./models.js');
 const cors = require('cors');
-
+const { v4: uuidv4 } = require('uuid');
 //Models 
 const movies = Models.Movie;
 const users = Models.User;
@@ -169,6 +169,7 @@ app.post('/users',
                 return res.status(400).send(req.body.name + ' already exists');
             }else{
                 users.create({
+                    _id: uuidv4(),
                     name: req.body.name,
                     password: hashedPassword,
                     email: req.body.email,
