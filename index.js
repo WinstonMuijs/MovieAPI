@@ -16,7 +16,7 @@ const users = Models.User;
 //Express-validator
 const {check, validationResult} = require('express-validator')
 
-// mongoose.connect('mongodb://localhost:27017/[artHouseDB]',{useNewUrlParser: true, useUnifiedTopology: true},() => {
+// mongoose.connect('mongodb+srv://artmovieADMIN:hello@artmovie.uv18wvy.mongodb.net/artmovie?retryWrites=true&w=majority',{useNewUrlParser: true, useUnifiedTopology: true},() => {
 //     console.log("connected")
 // },
 // e => {console.log(e)
@@ -279,3 +279,5 @@ const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0',() => {
  console.log('Listening on Port ' + port);
 });
+
+
