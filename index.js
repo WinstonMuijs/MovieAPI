@@ -47,7 +47,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 //Allowed domains 
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com','http://localhost:1234','https://verdant-stroopwafel-a5bdbc.netlify.app'];
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com','http://localhost:1234','https://main--verdant-stroopwafel-a5bdbc.netlify.app'];
 
 //CORS
 app.use(cors({
